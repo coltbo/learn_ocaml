@@ -53,4 +53,70 @@ let square x = x * x
 
 let _ = 5 |> succ |> square |> succ
 
+(* polymorphic functions *)
+(* poly = many, morph = form *)
+(* write functions that work for many arguments
+   regardless of their type *)
 
+(* identity function is the function that returns its input *)
+let id x = x
+
+(* 'a is a type variable. Typically called alpha *)
+
+(* we can make it more strict with manual type annotations *)
+let int_id (x : int) : int = x
+
+(* another way... *) 
+let id_int' : int -> int = id
+(* we limit the ability of id_int to integers with the
+   polymorphic function id *)
+
+(* let first x y = x *)
+(* let first_int : int -> 'b -> int = first *)
+(* let bad_first : int -> 'b -> string = first *)
+
+
+(* labeled and optional arguments *)
+let f ~name1:arg1 ~name2:arg2 = arg1 + arg2
+let res = f ~name2:3 ~name1:4
+
+(* labels for args are often the same name. OCaml allows a shorthand *)
+let fn ~name1 ~name2 = name1 +. name2
+let res2 = fn ~name1:3. ~name2:2.
+
+(* optional args *)
+let fn2 ?name:(arg1=8) arg2 = arg1 + arg2
+
+(* Partial application *)
+(* you could define an addition function like this *)
+let add x y = x + y
+
+(* you could also do it like this *)
+let addx x = fun y -> x + y
+
+let add5 = addx 5
+let res = add5 2
+
+(* you could also do it with the regular add *)
+let add5 = add 5
+let res = add5 2
+
+(* this is called partial application: we partially applied the
+   function add to one argument. This works because the following 
+   functions are syntactically different but semantically equivalent.
+   That is, they are different ways of expressing the same computation.*)
+
+(* Function associativity *)
+(* The TRUTH... every OCaml function takes exactly one argument *)
+
+(* Functions take a single argument and returns a new function
+   that expects the remaining arguments *)
+
+(* function types are right associative and function application
+   is left associative *)
+
+(* function types *)
+(* t1 -> (t2 -> (t3 -> t4)) *)
+
+(* function applicatino *)
+(* ((e1 e2) e3) e4 *)
