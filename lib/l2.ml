@@ -118,5 +118,49 @@ let res = add5 2
 (* function types *)
 (* t1 -> (t2 -> (t3 -> t4)) *)
 
-(* function applicatino *)
+(* function application *)
 (* ((e1 e2) e3) e4 *)
+
+(* operators as functions *)
+(* addition operator + has type int -> int -> int 
+   normall infix 3 + 4; but putting paren can make it
+   prefix *)
+let res = ( + ) 3 4
+
+let add3 = ( + ) 3
+
+(* you can even define our own infix operators *)
+let ( ^^ ) x y = max x y
+let res = 2 ^^ 3
+
+(* tail recursion *)
+(** [count n] is [n], computed by adding 1 to itself [n] times. That is,
+    this function coun up from 1 to [n]. *)
+let rec count n =
+  if n = 0 then 0 else 1 + count (n - 1)
+
+let res = count 10
+
+let rec count_aux n acc = 
+  if n = 0 then acc else count_aux (n - 1) (acc + 1)
+
+let count_tr n = count_aux n 0 
+
+(* why does tail recursion matter: a recursive call in tail position does not need
+   a new stack frame. It can just reuese the existing stack frame because there is
+   nothing left of use in the existing stack frame. The compiler just recycles the
+   space. *)
+(* This is called tail-call optimization. It reduces space complexity from O(n) to O(1) *)
+
+(* the recipe for tail recurion is as follows:
+    1. Change the function into a helper function. Add an extra argument: the accumulator,
+       often named acc.
+    2. Write a new "main" version of the function that calls the helper. It passes the 
+       original base case's return value as the initial value of the accumulator.
+    3. Change the helper function to return the accumulator in the base case.
+    4. Change the helper function's recursive case. *)
+
+let rec fact_aux n acc =
+  if n = 0 then acc else fact_aux (n - 1) (n * acc)
+
+let fact_tr n = fact_aux n 1
