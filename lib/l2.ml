@@ -175,3 +175,14 @@ let string_of_stat name num =
 
 let rec powf x y =
   if y = 0 then float_of_int 1 else x *. powf x (y - 1)
+
+let valid_date month day =
+  match month with
+  | "Jan" | "Mar" | "May" | "Jul" | "Aug" | "Oct" | "Dec" ->
+     if day <= 31 then true else false
+  | "Apr" | "Jun" | "Sep" | "Nov" ->
+     if day <= 30 then true else false
+  | "Feb" ->
+     if day <= 28 then true else false
+  | _ ->
+     false
