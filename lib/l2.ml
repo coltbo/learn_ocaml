@@ -3,7 +3,7 @@
 (* functions *)
 
 (* here is a regular function *)
-let f = print_endline @@ "Hello" ^ "World!"
+let _ = print_endline @@ "Hello" ^ "World!"
 
 (* here is a recursive function *)
 (* also, the comment below is called a specification comment.
@@ -75,10 +75,9 @@ let id_int' : int -> int = id
 (* let first_int : int -> 'b -> int = first *)
 (* let bad_first : int -> 'b -> string = first *)
 
-
 (* labeled and optional arguments *)
 let f ~name1:arg1 ~name2:arg2 = arg1 + arg2
-let res = f ~name2:3 ~name1:4
+let _ = f ~name2:3 ~name1:4
 
 (* labels for args are often the same name. OCaml allows a shorthand *)
 let fn ~name1 ~name2 = name1 +. name2
@@ -95,16 +94,16 @@ let add x y = x + y
 let addx x = fun y -> x + y
 
 let add5 = addx 5
-let res = add5 2
+let _ = add5 2
 
 (* you could also do it with the regular add *)
 let add5 = add 5
-let res = add5 2
+let _ = add5 2
 
 (* this is called partial application: we partially applied the
    function add to one argument. This works because the following 
    functions are syntactically different but semantically equivalent.
-   That is, they are different ways of expressing the same computation.*)
+   That is, they are different ways of exp_sing the same computation.*)
 
 (* Function associativity *)
 (* The TRUTH... every OCaml function takes exactly one argument *)
@@ -125,21 +124,21 @@ let res = add5 2
 (* addition operator + has type int -> int -> int 
    normall infix 3 + 4; but putting paren can make it
    prefix *)
-let res = ( + ) 3 4
+let _ = ( + ) 3 4
 
 let add3 = ( + ) 3
 
 (* you can even define our own infix operators *)
 let ( ^^ ) x y = max x y
-let res = 2 ^^ 3
+let _ = 2 ^^ 3
 
 (* tail recursion *)
 (** [count n] is [n], computed by adding 1 to itself [n] times. That is,
-    this function coun up from 1 to [n]. *)
+    this function counts up from 1 to [n]. *)
 let rec count n =
   if n = 0 then 0 else 1 + count (n - 1)
 
-let res = count 10
+let _ = count 10
 
 let rec count_aux n acc = 
   if n = 0 then acc else count_aux (n - 1) (acc + 1)
@@ -164,3 +163,15 @@ let rec fact_aux n acc =
   if n = 0 then acc else fact_aux (n - 1) (n * acc)
 
 let fact_tr n = fact_aux n 1
+
+(* printing *)
+let print_stat name (num : int) = 
+  Printf.printf "%s: %i\n%!" name num
+
+let string_of_stat name num = 
+  Printf.sprintf "%s: %F" name num
+
+(* exercises *)
+
+let rec powf x y =
+  if y = 0 then float_of_int 1 else x *. powf x (y - 1)
